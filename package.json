@@ -5,7 +5,7 @@
     "alb-vpc-lambda-sample-cdk": "bin/alb-vpc-lambda-sample-cdk.js"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "webpack",
     "watch": "tsc -w",
     "test": "jest",
     "cdk": "cdk",
@@ -22,8 +22,12 @@
     "aws-cdk": "1.85.0",
     "jest": "^26.4.2",
     "ts-jest": "^26.2.0",
+    "ts-loader": "^8.0.14",
     "ts-node": "^9.0.0",
-    "typescript": "~3.9.7"
+    "typescript": "~3.9.7",
+    "webpack": "^5.14.0",
+    "webpack-cli": "^4.3.1",
+    "webpack-node-externals": "^2.5.2"
   },
   "dependencies": {
     "@aws-cdk/core": "1.85.0",
