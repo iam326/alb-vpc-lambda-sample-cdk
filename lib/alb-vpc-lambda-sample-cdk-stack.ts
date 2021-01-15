@@ -94,6 +94,7 @@ export class AlbVpcLambdaSampleCdkStack extends cdk.Stack {
     listener.addTargets('AlbListenerTargetHello', {
       priority: 1,
       conditions: [
+        // elbv2.ListenerCondition.sourceIps(['x.x.x.x/32']),
         elbv2.ListenerCondition.httpRequestMethods(['GET']),
         elbv2.ListenerCondition.pathPatterns(['/hello']),
       ],
