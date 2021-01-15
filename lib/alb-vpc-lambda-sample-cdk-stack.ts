@@ -54,6 +54,20 @@ export class AlbVpcLambdaSampleCdkStack extends cdk.Stack {
       vpc,
     });
 
+    const HogeFugaPiyoFunction = new lambda.Function(
+      this,
+      'HogeFugaPiyoFunction',
+      {
+        code: lambda.Code.fromAsset('dist/hoge'),
+        functionName: `${prefix}-hoge-fuga-piyo`,
+        handler: 'index.handler',
+        runtime: lambda.Runtime.NODEJS_12_X,
+        timeout: cdk.Duration.seconds(10),
+        memorySize: 128,
+        vpc,
+      }
+    );
+
     // const albTargetGroup = new elbv2.ApplicationTargetGroup(
     //   this,
     //   'AlbTargetGroup',
@@ -77,10 +91,21 @@ export class AlbVpcLambdaSampleCdkStack extends cdk.Stack {
 
     // listener.addTargetGroups
     // listener.addAction;
-    listener.addTargets('AlbListenerTarget', {
+    listener.addTargets('AlbListenerTargetHello', {
       priority: 1,
-      conditions: [elbv2.ListenerCondition.pathPatterns(['/hello'])],
+      conditions: [
+        elbv2.ListenerCondition.httpRequestMethods(['GET']),
+        elbv2.ListenerCondition.pathPatterns(['/hello']),
+      ],
       targets: [new LambdaTarget(helloWorldFunction)],
+    });
+    listener.addTargets('AlbListenerTargetHoge', {
+      priority: 2,
+      conditions: [
+        elbv2.ListenerCondition.httpRequestMethods(['POST']),
+        elbv2.ListenerCondition.pathPatterns(['/hoge']),
+      ],
+      targets: [new LambdaTarget(HogeFugaPiyoFunction)],
     });
   }
 }

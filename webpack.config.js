@@ -6,6 +6,7 @@ module.exports = {
   target: 'node',
   entry: {
     'hello-world': path.resolve(__dirname, './src/lambda/hello-world/index.ts'),
+    hoge: path.resolve(__dirname, './src/lambda/hoge/index.ts'),
   },
   externals: [
     nodeExternals({
