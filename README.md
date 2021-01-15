@@ -1,14 +1,24 @@
-# Welcome to your CDK TypeScript project!
+# alb-vpc-lambda-sample-cdk
 
-This is a blank project for TypeScript development with CDK.
+ALB で VPC-Lambda を使用する CDK のサンプル
 
-The `cdk.json` file tells the CDK Toolkit how to execute your app.
+## Environment
 
-## Useful commands
+```
+$ cdk --version
+1.85.0 (build 5f44668)
 
- * `npm run build`   compile typescript to js
- * `npm run watch`   watch for changes and compile
- * `npm run test`    perform the jest unit tests
- * `cdk deploy`      deploy this stack to your default AWS account/region
- * `cdk diff`        compare deployed stack with current state
- * `cdk synth`       emits the synthesized CloudFormation template
+$ yarn --version
+1.22.10
+
+$ node --version
+v12.19.0
+```
+
+## Usage
+
+```
+$ cdk bootstrap
+$ yarn build
+$ yarn deploy
+```
