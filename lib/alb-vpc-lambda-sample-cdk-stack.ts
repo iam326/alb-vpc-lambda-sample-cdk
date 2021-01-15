@@ -54,21 +54,33 @@ export class AlbVpcLambdaSampleCdkStack extends cdk.Stack {
       vpc,
     });
 
-    const albTargetGroup = new elbv2.ApplicationTargetGroup(
-      this,
-      'AlbTargetGroup',
-      {
-        vpc,
-        targetGroupName: `${prefix}-tg`,
-        targetType: elbv2.TargetType.LAMBDA,
-        targets: [new LambdaTarget(helloWorldFunction)],
-      }
-    );
+    // const albTargetGroup = new elbv2.ApplicationTargetGroup(
+    //   this,
+    //   'AlbTargetGroup',
+    //   {
+    //     vpc,
+    //     targetGroupName: `${prefix}-tg`,
+    //     targetType: elbv2.TargetType.LAMBDA,
+    //     targets: [new LambdaTarget(helloWorldFunction)],
+    //   }
+    // );
 
-    alb.addListener('AlbListener', {
+    const listener = alb.addListener('AlbListener', {
       protocol: elbv2.ApplicationProtocol.HTTP,
       port: 80,
-      defaultTargetGroups: [albTargetGroup],
+      // defaultTargetGroups: [albTargetGroup],
+      defaultAction: elbv2.ListenerAction.fixedResponse(404, {
+        contentType: elbv2.ContentType.TEXT_PLAIN,
+        messageBody: 'NotFound',
+      }),
+    });
+
+    // listener.addTargetGroups
+    // listener.addAction;
+    listener.addTargets('AlbListenerTarget', {
+      priority: 1,
+      conditions: [elbv2.ListenerCondition.pathPatterns(['/hello'])],
+      targets: [new LambdaTarget(helloWorldFunction)],
     });
   }
 }
